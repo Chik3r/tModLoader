@@ -25,6 +25,7 @@ namespace ExampleMod.Content.Projectiles
 			//aiStyle = 160;
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 60;
+			Projectile.tileCollide = true;
 		}
 
 		public override void AI() {
@@ -167,25 +168,41 @@ namespace ExampleMod.Content.Projectiles
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) => false;
 
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
+			// When talking about extras below, it's the same as talking about the trail
+
+			// The amount of frames in the extra's spritesheet
 			int extraFrames = 15;
-			float someExtraRotation = 0f;
+			// An amount of rotation added to the extra
+			// Using NextFloat to showcase how the rotation can be changed
+			float extraAddedRotation = Main.rand.NextFloat(0, 50);
+
+			// Note: make sure numberTrailingExtras * lerpExtras is always less than 60, example:
+			// Valid: 5 * 10 = 50
+			// Not valid: 10 * 10 = 100
+			// Not valid: 12 * 5 = 60
 			int numberTrailingExtras = 10;
-			int num4 = 5;
-			float distanceBetweenExtras = 10f;
-			float someRotation = 0f;
-			int someDrawOffsetOrSomething = -14;
-			int someYDrawOffset = -2;
-			int startCustomDistance = -1;
-			int customDistance = -1;
-			int someWindThing = 8;
+			int lerpExtras = 5;
+			// The max distance between the extras
+			float maxDistanceBetweenExtras = 10f;
+			// An amount of rotation added to the head
+			// The extras also follow this rotation
+			float headAddedRotation = 0f;
+
+			// The offset for the trail start
+			int trailStartXOffset = -14;
+			int trailStartYOffset = -2;
+
+			// Determines how much the wind affects the extra's position, a higher value means it's affected more
+			int extraWindPower = 8;
+
+			// TODO: Find out
 			int someRectangleThing = 3;
 			int timesToDrawVertically = 1;
-			int moreDrawOffsets = 0;
-			int moreYDrawOffsets = 0;
-			bool someExtraDrawFlag = true;
-			bool decreaseSomeRectangle = false;
 
-			SpriteEffects effects = Projectile.spriteDirection != -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			// Whether to draw or not the fishing line that connects the extras
+			bool drawExtraLine = true;
+
+			SpriteEffects effects = (Projectile.spriteDirection != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			Texture2D mainTexture = ModContent.GetTexture(Texture).Value;
 			Rectangle mainRectangle = mainTexture.Frame(Main.projFrames[Projectile.type], 1, Projectile.frame);
 			Vector2 mainOrigin = mainRectangle.Size() / 2f;
@@ -200,17 +217,15 @@ namespace ExampleMod.Content.Projectiles
 
 			Texture2D extraTexture = TextureAssets.Extra[103].Value;
 			Rectangle extraRectangle = extraTexture.Frame(extraFrames);
-			
+
 			int extraWidth = extraRectangle.Width;
 			extraRectangle.Width -= 2;
 			// TODO: Find name
-			Vector2 origin3 = extraRectangle.Size() / 2f;
+			Vector2 halfExtraRect = extraRectangle.Size() / 2f;
 			extraRectangle.X = extraWidth * (extraFrames - 1);
 
 			Vector2 playerArmPosition = Main.GetPlayerArmPosition(Projectile);
 			Vector2 projCenter = Projectile.Center;
-
-			float scaleFactor = 12f;
 
 			Vector2 playerArmPos = playerArmPosition;
 			Vector2 distanceToArm = projCenter - playerArmPos;
@@ -235,25 +250,25 @@ namespace ExampleMod.Content.Projectiles
 
 			while (someDrawCondition) {
 				float sourceRectCustomHeight = 12f;
-				distanceArmLength = distanceToArm.Length();
-				float distanceToArmLength = distanceArmLength;
+				float armLength = distanceToArm.Length();
+				float armLengthCopy = distanceArmLength;
 
-				if (float.IsNaN(distanceArmLength) || distanceArmLength == 0f) {
+				if (float.IsNaN(armLength) || armLength == 0f) {
 					someDrawCondition = false;
 					continue;
 				}
 
-				if (distanceArmLength < 20f) {
-					sourceRectCustomHeight = distanceArmLength - 8f;
+				if (armLength < 20f) {
+					sourceRectCustomHeight = armLength - 8f;
 					someDrawCondition = false;
 				}
 
-				distanceArmLength = 12f / distanceArmLength;
-				distanceToArm *= distanceArmLength;
+				armLength = 12f / armLength;
+				distanceToArm *= armLength;
 				playerArmPos += distanceToArm;
 				distanceToArm = projCenter - playerArmPos;
 
-				if (distanceToArmLength > 12f) {
+				if (armLengthCopy > 12f) {
 					// TODO: Find name
 					float num22 = 0.3f;
 					float num23 = Math.Abs(projVelocity.X) + Math.Abs(projVelocity.Y);
@@ -262,7 +277,7 @@ namespace ExampleMod.Content.Projectiles
 
 					num23 = 1f - num23 / num17;
 					num22 *= num23;
-					num23 = distanceToArmLength / num18;
+					num23 = armLengthCopy / num18;
 					if (num23 > 1f)
 						num23 = 1f;
 
@@ -303,14 +318,14 @@ namespace ExampleMod.Content.Projectiles
 
 			Vector2 halfProjSize = Projectile.Size / 2f;
 			float absoluteWind = Math.Abs(Main.WindForVisuals);
-			float lerpedSpeedWind = MathHelper.Lerp(0.5f, 1f, absoluteWind);
+			float lerpedWindSpeed = MathHelper.Lerp(0.5f, 1f, absoluteWind);
 			float absoluteWindCopy = absoluteWind;
 
 			if (distanceToArm.Y >= -0.02f && distanceToArm.Y < 1f)
 				absoluteWindCopy = Utils.GetLerpValue(0.2f, 0.5f, absoluteWind, true);
 
 			// TODO: find name
-			int num27 = num4;
+			int num27 = lerpExtras;
 			int numTrailing = numberTrailingExtras + 1;
 
 			// TODO: Is this needed?
@@ -320,29 +335,15 @@ namespace ExampleMod.Content.Projectiles
 
 				// TODO: Find name for this
 				// Maybe some pos thing
-				Vector2 value6 = new Vector2(lerpedSpeedWind * someWindThing * Projectile.spriteDirection,
+				Vector2 value6 = new Vector2(lerpedWindSpeed * extraWindPower * Projectile.spriteDirection,
 					(float)Math.Sin(Main.timeForVisualEffects / 300f * 6.2831854820251465 * absoluteWindCopy) * 2f);
 
-				float xDrawOffset = someDrawOffsetOrSomething + moreDrawOffsets;
-				float yDrawOffset = someYDrawOffset + moreYDrawOffsets;
-
-				//switch (i) {
-				//	case 1:
-				//		value6 = new Vector2(lerpedSpeedWind * someWindThing * Projectile.spriteDirection,
-				//			(float)Math.Sin(Main.timeForVisualEffects / 300f * 6.2831854820251465 * absoluteWindCopy + 0.5f) * 2f);
-				//		xDrawOffset -= 8f;
-				//		yDrawOffset -= 8f;
-				//		break;
-				//		// TODO: Are these really needed?
-				//		//case 2:
-				//		//	break;
-				//		//case 3:
-				//		//	break;
-				//}
+				float xDrawOffset = trailStartXOffset;
+				float yDrawOffset = trailStartYOffset;
 
 				Vector2 value7 = Projectile.Center +
 				                 new Vector2(((float)mainRectangle.Width * 0.5f + xDrawOffset) * (float)Projectile.spriteDirection,
-					                 yDrawOffset).RotatedBy(Projectile.rotation + someRotation);
+					                 yDrawOffset).RotatedBy(Projectile.rotation + headAddedRotation);
 				posList.Add(value7);
 
 				int num31 = num27;
@@ -356,18 +357,16 @@ namespace ExampleMod.Content.Projectiles
 					}
 					else {
 						oldPos += halfProjSize +
-						          new Vector2((mainRectangle.Width * 0.5f + (float)xDrawOffset) * (float)Projectile.oldSpriteDirection[num31],
-							          yDrawOffset).RotatedBy(Projectile.oldRot[num31] + someRotation);
-						//value8 += value5 +
-						//          new Vector2(((float)rectangle.Width * 0.5f + num29) * (float)proj.oldSpriteDirection[num31], num30)
-						//	          .RotatedBy(proj.oldRot[num31] + someRotation);
+						          new Vector2(
+							          (mainRectangle.Width * 0.5f + (float)xDrawOffset) * (float)Projectile.oldSpriteDirection[num31],
+							          yDrawOffset).RotatedBy(Projectile.oldRot[num31] + headAddedRotation);
 						oldPos += value6 * (num32 + 1);
 
 						Vector2 difference = value7 - oldPos;
 						float diffLength = difference.Length();
 
-						if (diffLength > distanceBetweenExtras)
-							diffLength *= distanceBetweenExtras / diffLength;
+						if (diffLength > maxDistanceBetweenExtras)
+							difference *= maxDistanceBetweenExtras / diffLength;
 
 						oldPos = value7 - difference;
 						posList.Add(oldPos);
@@ -378,7 +377,8 @@ namespace ExampleMod.Content.Projectiles
 					num32++;
 				}
 
-				if (someExtraDrawFlag) {
+
+				if (drawExtraLine) {
 					Rectangle fishLineRect = fishingLineTexture.Frame();
 					for (int j = posList.Count - 2; j >= 0; j--) {
 						Vector2 pos = posList[j];
@@ -394,26 +394,22 @@ namespace ExampleMod.Content.Projectiles
 				}
 
 				for (int num36 = posList.Count - 2; num36 >= 0; num36--) {
-					Vector2 value11 = posList[num36];
-					Vector2 value12 = posList[num36 + 1];
-					Vector2 v2 = value12 - value11;
-					v2.Length();
-					float rotation3 = v2.ToRotation() - (float)Math.PI / 2f + someExtraRotation;
-					Main.EntitySpriteDraw(extraTexture, value12 - Main.screenPosition, extraRectangle, alpha, rotation3, origin3, Projectile.scale, effects, 0);
+					Vector2 pos = posList[num36];
+					Vector2 nextPos = posList[num36 + 1];
+					Vector2 difference = nextPos - pos;
+					difference.Length();
+					float rotation3 = difference.ToRotation() - (float)Math.PI / 2f + extraAddedRotation;
+					Main.EntitySpriteDraw(extraTexture, nextPos - Main.screenPosition, extraRectangle, alpha, rotation3, halfExtraRect,
+						Projectile.scale, effects, 0);
 					extraRectangle.X -= extraWidth;
 					if (extraRectangle.X < 0) {
-						int num37 = someRectangleThing;
-						if (decreaseSomeRectangle)
-							num37--;
-
-						extraRectangle.X = num37 * extraWidth;
+						extraRectangle.X = someRectangleThing * extraWidth;
 					}
 				}
 			}
 
-			Main.EntitySpriteDraw(mainTexture, mainPosition, mainRectangle, alpha, Projectile.rotation + someRotation, mainOrigin, Projectile.scale, effects, 0);
-
-			return;
+			Main.EntitySpriteDraw(mainTexture, mainPosition, mainRectangle, alpha, Projectile.rotation + headAddedRotation, mainOrigin,
+				Projectile.scale, effects, 0);
 		}
 	}
 }
