@@ -16,7 +16,7 @@
 +			int[] array = new int[TileLoader.TileCount];
  			for (int i = position.X; i < position.X + 2; i++) {
  				for (int j = position.Y - 4; j <= position.Y; j++) {
- 					Tile tile = Main.tile[i, j];
+ 					ref Tile tile = ref Main.tile[i, j];
 @@ -399,7 +_,7 @@
  
  			item[1] = new Item();

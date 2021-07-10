@@ -128,7 +128,7 @@
  				if (_type != 48 || (state != 1 && state != 2))
 @@ -3218,7 +_,7 @@
  
- 			Tile tileSafely = Framing.GetTileSafely(p.X, p.Y);
+ 			ref Tile tileSafely = ref Framing.GetTileSafely(p.X, p.Y);
  			if (WorldGen.SolidTile(p)) {
 -				int num = WorldGen.KillTile_GetTileDustAmount(fail: true, tileSafely);
 +				int num = WorldGen.KillTile_GetTileDustAmount(true, tileSafely, p.X, p.Y);

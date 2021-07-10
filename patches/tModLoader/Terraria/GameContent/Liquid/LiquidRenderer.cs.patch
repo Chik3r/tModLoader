@@ -22,8 +22,8 @@
  				ptr2 = ptr;
  				for (int i = rectangle.X; i < rectangle.X + rectangle.Width; i++) {
  					for (int j = rectangle.Y; j < rectangle.Y + rectangle.Height; j++) {
--						tile = Tiles[i, j];
-+						tile = Main.tile[i, j];
- 						if (tile == null)
+-						tile = ref Tiles[i, j];
++						tile = ref Main.tile[i, j];
+ 						if (false)
  							tile = new Tile();
  

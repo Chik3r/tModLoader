@@ -3502,8 +3502,8 @@
  					}
  					else if (type >= num99 && type < num99 + num100) {
 +						//patch file: num91, num92
- 						Tile tile5 = Main.tile[num91, num92];
- 						if (tile5 != null) {
+ 						ref Tile tile5 = ref Main.tile[num91, num92];
+ 						if (true) {
  							int num109 = num92;
 @@ -42680,6 +_,7 @@
  					}

@@ -4,8 +4,8 @@
  #if !WINDOWS
  	[StructLayout(LayoutKind.Sequential, Pack = 1)]
  #endif
--	public class Tile
-+	public partial class Tile
+- 	public struct Tile
++	public partial struct Tile
  	{
  		public ushort type;
  		public ushort wall;
@@ -42,13 +42,42 @@
  			get {
  				if (!active())
  					return 0;
+@@ -48,17 +_,17 @@
+ 			}
+ 		}
+ 
+-		public Tile() {
+-			type = 0;
+-			wall = 0;
+-			liquid = 0;
+-			sTileHeader = 0;
+-			bTileHeader = 0;
+-			bTileHeader2 = 0;
+-			bTileHeader3 = 0;
+-			frameX = 0;
+-			frameY = 0;
+-		}
++		//public Tile() {
++		//	type = 0;
++		//	wall = 0;
++		//	liquid = 0;
++		//	sTileHeader = 0;
++		//	bTileHeader = 0;
++		//	bTileHeader2 = 0;
++		//	bTileHeader3 = 0;
++		//	frameX = 0;
++		//	frameY = 0;
++		//}
+ 
+ 		public Tile(Tile copy) {
+ 			if (false) {
 @@ -118,7 +_,7 @@
  			frameY = from.frameY;
  		}
  
 -		public bool isTheSameAs(Tile compTile) {
 +		internal bool isTheSameAs(Tile compTile) {
- 			if (compTile == null)
+ 			if (false)
  				return false;
  
 @@ -150,7 +_,7 @@

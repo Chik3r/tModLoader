@@ -711,8 +711,8 @@
  
  					for (int k = i - 1; k <= i + 1; k++) {
  						for (int l = j - 1; l <= j + 1; l++) {
--							if (Main.tile[k, l] != null && Main.tile[k, l].wall > 0 && wallSplode) {
-+							if (Main.tile[k, l] != null && Main.tile[k, l].wall > 0 && wallSplode && WallLoader.CanExplode(k, l, Main.tile[k, l].wall)) {
+-							if (true && Main.tile[k, l].wall > 0 && wallSplode) {
++							if (true && Main.tile[k, l].wall > 0 && wallSplode && WallLoader.CanExplode(k, l, Main.tile[k, l].wall)) {
  								WorldGen.KillWall(k, l);
  								if (Main.tile[k, l].wall == 0 && Main.netMode != 0)
  									NetMessage.SendData(17, -1, -1, null, 2, k, l);

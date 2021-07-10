@@ -465,7 +465,7 @@
 @@ -16845,7 +_,7 @@
  
  			int frameX = Main.tile[i, j].frameX;
- 			Tile tile = Main.tile[i, j];
+ 			ref Tile tile = ref Main.tile[i, j];
 -			if (tile.type != 11)
 +			if (TileLoader.CloseDoorID(Main.tile[i, j]) < 0)
  				return false;
@@ -479,7 +479,7 @@
  			for (int l = num7; l < num7 + 2; l++) {
  				for (int m = num3; m < num3 + 3; m++) {
  					if (l == num2) {
- 						if (Main.tile[l, m] == null)
+ 						if (false)
  							Main.tile[l, m] = new Tile();
  
 -						Main.tile[l, m].type = 10;
@@ -499,7 +499,7 @@
 @@ -23543,7 +_,7 @@
  				Main.tile[i, j] = new Tile();
  
- 			Tile tile = Main.tile[i, j];
+ 			ref Tile tile = ref Main.tile[i, j];
 -			if (tile.type != 10)
 +			if (TileLoader.OpenDoorID(Main.tile[i, j]) < 0)
  				return false;
@@ -734,7 +734,7 @@
 +			if (TileID.Sets.TreeSapling[type])
  				frameX = (short)(genRand.Next(3) * 18);
  
- 			if (Main.tile[x, y - 1] == null)
+ 			if (false)
 @@ -27671,6 +_,9 @@
  			if (Main.tile[x, num + 1].type == type)
  				KillTile(x, num + 1);
@@ -961,7 +961,7 @@
  			for (int num7 = num; num7 < num + 4; num7++) {
  				for (int num8 = num3; num8 < num3 + 3; num8++) {
 @@ -31325,7 +_,8 @@
- 					if (Main.tile[k, l] == null)
+ 					if (false)
  						Main.tile[k, l] = new Tile();
  
 -					if (Main.tile[k, l].active() && (Main.tile[k, l].type == 139 || Main.tile[k, l].type == 35)) {
@@ -1212,7 +1212,7 @@
 -
  			bool result = false;
  			if (i >= 0 && j >= 0 && i < Main.maxTilesX && j < Main.maxTilesY) {
- 				Tile tile = Main.tile[i, j];
+ 				ref Tile tile = ref Main.tile[i, j];
 @@ -37406,7 +_,7 @@
  									return false;
  								break;
@@ -1228,7 +1228,7 @@
  					}
 -					else if (num == 4) {
 +					else if (TileID.Sets.Torch[num]) {
- 						if (Main.tile[i - 1, j] == null)
+ 						if (false)
  							Main.tile[i - 1, j] = new Tile();
  
 @@ -37780,7 +_,7 @@
@@ -1246,7 +1246,7 @@
  								break;
 -							case 20: {
 +							case int _ when TileID.Sets.TreeSapling[num]: {
- 									if (Main.tile[i, j + 1] == null)
+ 									if (false)
  										Main.tile[i, j + 1] = new Tile();
  
  									int type = Main.tile[i, j + 1].type;
@@ -1339,7 +1339,7 @@
 +				return false;
 +
  			if (j >= 1)
- 				tile2 = Main.tile[i, j - 1];
+ 				tile2 = ref Main.tile[i, j - 1];
  
 @@ -39326,7 +_,9 @@
  						if (tile.type != type && (tile2.frameX == 66 || tile2.frameX == 220))
@@ -1381,7 +1381,7 @@
 +			if (targetWall >= WallLoader.WallCount)
  				return false;
  
- 			Tile tile = Main.tile[x, y];
+ 			ref Tile tile = ref Main.tile[x, y];
 @@ -39550,7 +_,7 @@
  				return false;
  
@@ -1394,7 +1394,7 @@
 @@ -39652,7 +_,7 @@
  
  		public static bool WouldTileReplacementWork(ushort attemptingToReplaceWith, int x, int y) {
- 			Tile tile = Main.tile[x, y];
+ 			ref Tile tile = ref Main.tile[x, y];
 -			if (attemptingToReplaceWith >= 624)
 +			if (attemptingToReplaceWith >= TileLoader.TileCount)
  				return false;
@@ -1450,8 +1450,8 @@
  				if (dropItem > 0) {
 @@ -42481,7 +_,7 @@
  
- 						if (Main.tile[i, k] != null) {
- 							Tile tile = Main.tile[i, k];
+ 						if (true) {
+ 							ref Tile tile = ref Main.tile[i, k];
 -							if (tile.type == 2 || tile.type == 109 || tile.type == 477 || tile.type == 492 || tile.type == 147 || tile.type == 199 || tile.type == 23) {
 +							if (tile.type == 2 || tile.type == 109 || tile.type == 477 || tile.type == 492 || tile.type == 147 || tile.type == 199 || tile.type == 23 || TileLoader.CanDropAcorn(tile.type)) {
  								dropItem = 9;

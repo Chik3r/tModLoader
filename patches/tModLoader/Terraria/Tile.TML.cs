@@ -3,7 +3,7 @@ using Terraria.ID;
 
 namespace Terraria
 {
-	public partial class Tile
+	public partial struct Tile
 	{
 		private static void SetBit(ref byte header, int position, bool value) {
 			if (value)
@@ -168,9 +168,6 @@ namespace Terraria
 		}
 		
 		public bool IsTheSameAs(Tile other) {
-			if (other == null)
-				return false;
-
 			if (sTileHeader != other.sTileHeader)
 				return false;
 

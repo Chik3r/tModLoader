@@ -11,7 +11,7 @@ namespace Terraria.ModLoader.Default
 
 			var tile = Main.tile[i, j];
 
-			if (tile == null || tile.type != Type) {
+			if (tile.type != Type) {
 				return;
 			}
 

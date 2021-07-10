@@ -9,9 +9,10 @@
  
  namespace Terraria
  {
+-	public class Tile
 +#if !WINDOWS
 +	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 +#endif
- 	public class Tile
++ 	public struct Tile
  	{
  		public ushort type;

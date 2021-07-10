@@ -33,7 +33,7 @@
 +				//patch file: n, num17
  				for (int n = num3; n < num4; n++) {
  					LightingState lightingState2 = array3[n - _expandedRectTop];
- 					Tile tile = Main.tile[m, n];
+ 					ref Tile tile = ref Main.tile[m, n];
 @@ -746,6 +_,8 @@
  							_wetLightB = 0f;
  							break;

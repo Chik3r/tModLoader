@@ -12,16 +12,15 @@ namespace Terraria.ModLoader
 				int fX = 0;
 				int fY = 0;
 
-				if (tile != null) {
-					TileObjectData data = TileObjectData.GetTileData(tile.type, 0);
+				TileObjectData data = TileObjectData.GetTileData(tile.type, 0);
 
-					if (data != null) {
-						int size = 16 + data.CoordinatePadding;
+				if (data != null) {
+					int size = 16 + data.CoordinatePadding;
 
-						fX = (tile.frameX % (size * data.Width)) / size;
-						fY = (tile.frameY % (size * data.Height)) / size;
-					}
+					fX = (tile.frameX % (size * data.Width)) / size;
+					fY = (tile.frameY % (size * data.Height)) / size;
 				}
+
 
 				return new Point16(i - fX, j - fY);
 			}
