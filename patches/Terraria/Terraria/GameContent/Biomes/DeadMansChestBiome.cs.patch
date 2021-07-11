@@ -1,0 +1,51 @@
+--- src/decompiled/Terraria/GameContent/Biomes/DeadMansChestBiome.cs
++++ src/Terraria/Terraria/GameContent/Biomes/DeadMansChestBiome.cs
+@@ -16,15 +_,17 @@
+ 			public int x;
+ 			public int y;
+ 			public Point position;
+-			public Tile t;
++			public int trueX;
++			public int trueY;
+ 
+-			public DartTrapPlacementAttempt(Point position, int directionX, int x, int y, int xPush, Tile t) {
++			public DartTrapPlacementAttempt(Point position, int directionX, int x, int y, int xPush, int trueX, int trueY) {
+ 				this.position = position;
+ 				this.directionX = directionX;
+ 				this.x = x;
+ 				this.y = y;
+ 				this.xPush = xPush;
+-				this.t = ref t;
++				this.trueX = trueX;
++				this.trueY = trueY;
+ 			}
+ 		}
+ 
+@@ -92,7 +_,8 @@
+ 
+ 			TurnGoldChestIntoDeadMansChest(origin);
+ 			foreach (DartTrapPlacementAttempt dartTrapPlacementSpot in _dartTrapPlacementSpots) {
++				ref Tile t = ref Main.tile[dartTrapPlacementSpot.trueX, dartTrapPlacementSpot.trueY];
+-				ActuallyPlaceDartTrap(dartTrapPlacementSpot.position, dartTrapPlacementSpot.directionX, dartTrapPlacementSpot.x, dartTrapPlacementSpot.y, dartTrapPlacementSpot.xPush, dartTrapPlacementSpot.t);
++				ActuallyPlaceDartTrap(dartTrapPlacementSpot.position, dartTrapPlacementSpot.directionX, dartTrapPlacementSpot.x, dartTrapPlacementSpot.y, dartTrapPlacementSpot.xPush, ref t);
+ 			}
+ 
+ 			foreach (WirePlacementAttempt wirePlacementSpot in _wirePlacementSpots) {
+@@ -250,7 +_,7 @@
+ 				ref Tile tile = ref Main.tile[x + i * directionX, y];
+ 				if (tile.type != 467 && tile.active() && Main.tileSolid[tile.type]) {
+ 					if (i >= 5 && !tile.actuator() && !Main.tileFrameImportant[tile.type] && TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
+-						_dartTrapPlacementSpots.Add(new DartTrapPlacementAttempt(position, directionX, x, y, i, tile));
++						_dartTrapPlacementSpots.Add(new DartTrapPlacementAttempt(position, directionX, x, y, i, x + i * directionX, y));
+ 						return true;
+ 					}
+ 
+@@ -402,7 +_,7 @@
+ 			Main.chest[num3].item = item;
+ 		}
+ 
+-		private void ActuallyPlaceDartTrap(Point position, int directionX, int x, int y, int xPush, Tile t) {
++		private void ActuallyPlaceDartTrap(Point position, int directionX, int x, int y, int xPush, ref Tile t) {
+ 			t.type = 137;
+ 			t.frameY = 0;
+ 			if (directionX == -1)

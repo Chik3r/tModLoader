@@ -1,0 +1,35 @@
+--- src/decompiled/Terraria/Framing.cs
++++ src/Terraria/Terraria/Framing.cs
+@@ -375,17 +_,17 @@
+ 			tile.wallFrameY(point.Y);
+ 		}
+ 
+-		public static Tile GetTileSafely(Vector2 position) {
++		public static ref Tile GetTileSafely(Vector2 position) {
+ 			position /= 16f;
+-			return GetTileSafely((int)position.X, (int)position.Y);
++			return ref GetTileSafely((int)position.X, (int)position.Y);
+ 		}
+ 
+-		public static Tile GetTileSafely(Point pt) => GetTileSafely(pt.X, pt.Y);
++		public static ref Tile GetTileSafely(Point pt) => ref GetTileSafely(pt.X, pt.Y);
+-		public static Tile GetTileSafely(Point16 pt) => GetTileSafely(pt.X, pt.Y);
++		public static ref Tile GetTileSafely(Point16 pt) => ref GetTileSafely(pt.X, pt.Y);
+ 
+-		public static Tile GetTileSafely(int i, int j) {
++		public static ref Tile GetTileSafely(int i, int j) {
+ 			if (!WorldGen.InWorld(i, j))
+-				return new Tile();
++				return ref Tile.Dummy;
+ 
+ 			ref Tile tile = ref Main.tile[i, j];
+ 			if (false) {
+@@ -393,7 +_,7 @@
+ 				// Main.tile[i, j] = ref tile// Commented out by Tile Struct Refactorer;
+ 			}
+ 
+-			return tile;
++			return ref tile;
+ 		}
+ 	}
+ }

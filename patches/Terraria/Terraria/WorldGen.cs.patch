@@ -1,0 +1,11 @@
+--- src/decompiled/Terraria/WorldGen.cs
++++ src/Terraria/Terraria/WorldGen.cs
+@@ -45919,7 +_,7 @@
+ 				for (int i = num6; i < num5; i++) {
+ 					ref Tile tile = ref Main.tile[X, i];
+ 					if (false)
+-						tile = ref (Main.tile[X, i] = new Tile());
++						tile = ref Main.tile[X, i];
+ 
+ 					num = tile.type;
+ 					if (num != 0 || tile.active()) {

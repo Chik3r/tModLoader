@@ -1,0 +1,36 @@
+--- src/decompiled/Terraria/Player.cs
++++ src/Terraria/Terraria/Player.cs
+@@ -36843,7 +_,7 @@
+ 			if (tileTarget.type == 128 || tileTarget.type == 269) {
+ 				if (tileTarget.frameX == 18 || tileTarget.frameX == 54) {
+ 					x--;
+-					tileTarget = ref Main.tile[x, y];
++					tileTarget = Main.tile[x, y];
+ 					hitTile.UpdatePosition(hitBufferIndex, x, y);
+ 				}
+ 
+@@ -36856,13 +_,13 @@
+ 			if (tileTarget.type == 334) {
+ 				if (tileTarget.frameY == 0) {
+ 					y++;
+-					tileTarget = ref Main.tile[x, y];
++					tileTarget = Main.tile[x, y];
+ 					hitTile.UpdatePosition(hitBufferIndex, x, y);
+ 				}
+ 
+ 				if (tileTarget.frameY == 36) {
+ 					y--;
+-					tileTarget = ref Main.tile[x, y];
++					tileTarget = Main.tile[x, y];
+ 					hitTile.UpdatePosition(hitBufferIndex, x, y);
+ 				}
+ 
+@@ -36873,7 +_,7 @@
+ 					int num3 = frameX / 18;
+ 					num3 %= 3;
+ 					x -= num3;
+-					tileTarget = ref Main.tile[x, y];
++					tileTarget = Main.tile[x, y];
+ 					if (tileTarget.frameX >= 5000)
+ 						flag = true;
+ 				}

@@ -1,0 +1,30 @@
+--- src/decompiled/Terraria/Physics/BallCollision.cs
++++ src/Terraria/Terraria/Physics/BallCollision.cs
+@@ -84,7 +_,8 @@
+ 
+ 		private static bool CheckForPassThrough(Vector2 center, out BallPassThroughType type, out Tile contactTile) {
+ 			Point tileCoordinates = center.ToTileCoordinates();
+-			ref Tile tile = ref contactTile = Main.tile[tileCoordinates.X, tileCoordinates.Y];
++			contactTile = Main.tile[tileCoordinates.X, tileCoordinates.Y];
++			ref Tile tile = ref contactTile;
+ 			type = BallPassThroughType.None;
+ 			if (false)
+ 				return false;
+@@ -151,7 +_,7 @@
+ 			tileEdges = ((!(velocity.Y > velocity.X)) ? (tileEdges | TileEdges.TopRightSlope) : (tileEdges | TileEdges.BottomLeftSlope));
+ 			tileEdges = ((!(velocity.Y > 0f - velocity.X)) ? (tileEdges | TileEdges.TopLeftSlope) : (tileEdges | TileEdges.BottomRightSlope));
+ 			collisionPoint = Vector2.Zero;
+-			collisionTile = ref null;
++			collisionTile = Tile.Dummy;
+ 			float num = float.MaxValue;
+ 			Vector2 closestPointOut = default(Vector2);
+ 			float distanceSquaredOut = 0f;
+@@ -160,7 +_,7 @@
+ 					if (GetCollisionPointForTile(tileEdges, i, j, vector, ref closestPointOut, ref distanceSquaredOut) && !(distanceSquaredOut >= num) && !(Vector2.Dot(velocity, vector - closestPointOut) > 0f)) {
+ 						num = distanceSquaredOut;
+ 						collisionPoint = closestPointOut;
+-						collisionTile = ref Main.tile[i, j];
++						collisionTile = Main.tile[i, j];
+ 					}
+ 				}
+ 			}

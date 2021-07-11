@@ -1,6 +1,6 @@
 --- src/decompiled/Terraria/Tile.cs
 +++ src/Terraria/Terraria/Tile.cs
-@@ -1,8 +_,14 @@
+@@ -1,10 +_,18 @@
  using Microsoft.Xna.Framework;
  using Terraria.DataStructures;
 +#if !WINDOWS
@@ -12,6 +12,27 @@
 +#if !WINDOWS
 +	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 +#endif
- 	public class Tile
+-	public class Tile
++	public struct Tile
  	{
++		public static Tile Dummy = new Tile();
++
  		public ushort type;
+ 		public ushort wall;
+ 		public byte liquid;
+@@ -42,6 +_,7 @@
+ 			}
+ 		}
+ 
++		/****
+ 		public Tile() {
+ 			type = 0;
+ 			wall = 0;
+@@ -53,6 +_,7 @@
+ 			frameX = 0;
+ 			frameY = 0;
+ 		}
++		****/
+ 
+ 		public Tile(Tile copy) {
+ 			if (false) {

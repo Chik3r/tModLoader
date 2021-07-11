@@ -1,0 +1,11 @@
+--- src/decompiled/Terraria/Physics/BallCollisionEvent.cs
++++ src/Terraria/Terraria/Physics/BallCollisionEvent.cs
+@@ -13,7 +_,7 @@
+ 		public BallCollisionEvent(float timeScale, Vector2 normal, Vector2 impactPoint, Tile tile, Entity entity) {
+ 			Normal = normal;
+ 			ImpactPoint = impactPoint;
+-			Tile = ref tile;
++			Tile = tile;
+ 			Entity = entity;
+ 			TimeScale = timeScale;
+ 		}

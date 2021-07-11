@@ -10,3 +10,12 @@
  			double num = Math.Abs(Main.WindForVisuals);
  			num = Utils.GetLerpValue(0.08f, 1.2f, (float)num, clamped: true);
  			_treeWindCounter += 0.004166666666666667 + 0.004166666666666667 * num * 2.0;
+@@ -535,7 +_,7 @@
+ 		}
+ 
+ 		private void DrawSingleTile(TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
+-			drawData.tileCache = ref Main.tile[tileX, tileY];
++			drawData.tileCache = Main.tile[tileX, tileY];
+ 			drawData.typeCache = drawData.tileCache.type;
+ 			drawData.tileFrameX = drawData.tileCache.frameX;
+ 			drawData.tileFrameY = drawData.tileCache.frameY;

@@ -9,3 +9,16 @@
  				throw new Exception("Be sure to update Minecart.textureWidth to match the actual texture size of " + 50f + ".");
  
  			_rightSideConnection = new int[36];
+@@ -1187,7 +_,11 @@
+ 							break;
+ 					}
+ 
+-					ref Tile tile = ref (k % 2 != 0) ? Main.tile[i + 1, j + num10] : Main.tile[i - 1, j + num10];
++					ref Tile tile = ref Tile.Dummy;
++					if (k % 2 != 0)
++						tile = ref Main.tile[i + 1, j + num10];
++					else
++						tile = ref Main.tile[i - 1, j + num10];
+ 					int num11 = (true && tile.active() && tile.type == 314) ? tile.color() : 0;
+ 					switch (k) {
+ 						default:

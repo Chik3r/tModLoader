@@ -1,0 +1,11 @@
+--- src/decompiled/Terraria/Physics/BallPassThroughEvent.cs
++++ src/Terraria/Terraria/Physics/BallPassThroughEvent.cs
+@@ -8,7 +_,7 @@
+ 		public readonly float TimeScale;
+ 
+ 		public BallPassThroughEvent(float timeScale, Tile tile, Entity entity, BallPassThroughType type) {
+-			Tile = ref tile;
++			Tile = tile;
+ 			Entity = entity;
+ 			Type = type;
+ 			TimeScale = timeScale;
