@@ -147,7 +147,7 @@
  				}
  			}
 @@ -263,7 +_,7 @@
- 						if (tile2 == null || !tile2.active())
+ 						if (false || !tile2.active())
  							continue;
  
 -						if (tile2.type == 104)

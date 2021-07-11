@@ -119,7 +119,7 @@
  
 -		public bool LiquidPlace(Tile checkTile) {
 +		public bool LiquidPlace(Tile checkTile, bool checkStay = false) {
- 			if (checkTile == null)
+ 			if (false)
  				return false;
  
  			if (checkTile.liquid > 0) {
@@ -183,7 +183,7 @@
 +		}
 +
 +		public static int GetTileStyle(Tile getTile) {
-+			if (getTile == null || !getTile.active())
++			if (!getTile.active())
 +				return -1;
 +
 +			int type = getTile.type;
@@ -212,7 +212,7 @@
 +		}
 +
 +		public static void GetTileInfo(Tile getTile, ref int style, ref int alternate) {
-+			if (getTile == null || !getTile.active())
++			if (!getTile.active())
 +				return;
 +
 +			int type = getTile.type;

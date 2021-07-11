@@ -215,15 +215,15 @@
 @@ -37008,7 +_,7 @@
  
  					if (closeDoor && ((position.X + (float)(width / 2)) / 16f > (float)(doorX + 2) || (position.X + (float)(width / 2)) / 16f < (float)(doorX - 2))) {
- 						Tile tileSafely = Framing.GetTileSafely(doorX, doorY);
+ 						ref Tile tileSafely = ref Framing.GetTileSafely(doorX, doorY);
 -						if (tileSafely.type == 11) {
 +						if (TileLoader.CloseDoorID(tileSafely) >= 0) {
  							if (WorldGen.CloseDoor(doorX, doorY)) {
  								closeDoor = false;
  								NetMessage.SendData(19, -1, -1, null, 1, doorX, doorY, base.direction);
 @@ -37172,7 +_,7 @@
- 						Tile tileSafely4 = Framing.GetTileSafely(num18, num19 - 1);
- 						Tile tileSafely5 = Framing.GetTileSafely(num18, num19 - 2);
+ 						ref Tile tileSafely4 = ref Framing.GetTileSafely(num18, num19 - 1);
+ 						ref Tile tileSafely5 = ref Framing.GetTileSafely(num18, num19 - 2);
  						bool flag18 = height / 16 < 3;
 -						if (townNPC && tileSafely5.nactive() && (tileSafely5.type == 10 || tileSafely5.type == 388) && (Main.rand.Next(10) == 0 || flag)) {
 +						if (townNPC && tileSafely5.nactive() && (TileLoader.OpenDoorID(tileSafely5) >= 0 || tileSafely5.type == 388) && (Main.rand.Next(10) == 0 || flag)) {
@@ -374,7 +374,7 @@
  									if (!flag24) {
  										ai[3] = num52;
 @@ -42823,7 +_,7 @@
- 								Tile tileSafely = Framing.GetTileSafely(i, j);
+ 								ref Tile tileSafely = ref Framing.GetTileSafely(i, j);
  								bool flag2 = tileSafely.active() && Main.tileSolid[tileSafely.type] && !Main.tileFrameImportant[tileSafely.type];
  								if (flag && flag2) {
 -									int num38 = WorldGen.KillTile_GetTileDustAmount(fail: true, tileSafely);
@@ -383,9 +383,9 @@
  										Dust obj = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tileSafely)];
  										obj.velocity.Y -= 3f + (float)num37 * 1.5f;
 @@ -44447,7 +_,7 @@
- 				Tile tileSafely4 = Framing.GetTileSafely(num64, num65 - 1);
- 				Tile tileSafely5 = Framing.GetTileSafely(num64, num65 - 2);
- 				Tile tileSafely6 = Framing.GetTileSafely(num64, num65 - 3);
+ 				ref Tile tileSafely4 = ref Framing.GetTileSafely(num64, num65 - 1);
+ 				ref Tile tileSafely5 = ref Framing.GetTileSafely(num64, num65 - 2);
+ 				ref Tile tileSafely6 = ref Framing.GetTileSafely(num64, num65 - 3);
 -				if (flag8 && tileSafely4.nactive() && (tileSafely4.type == 10 || tileSafely4.type == 388)) {
 +				if (flag8 && tileSafely4.nactive() && (TileLoader.IsClosedDoor(tileSafely4) || tileSafely4.type == 388)) {
  					ai[0] += 1f;

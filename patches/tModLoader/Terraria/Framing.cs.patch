@@ -9,7 +9,7 @@
  namespace Terraria
  {
 @@ -312,7 +_,7 @@
- 			if (WorldGen.SkipFramingBecauseOfGen || i <= 0 || j <= 0 || i >= Main.maxTilesX - 1 || j >= Main.maxTilesY - 1 || Main.tile[i, j] == null)
+ 			if (WorldGen.SkipFramingBecauseOfGen || i <= 0 || j <= 0 || i >= Main.maxTilesX - 1 || j >= Main.maxTilesY - 1 || false)
  				return;
  
 -			if (Main.tile[i, j].wall >= 316)

@@ -1957,7 +1957,7 @@
  								return;
  						}
 @@ -12439,6 +_,13 @@
- 					if (tile == null)
+ 					if (false)
  						return;
  
 +					if (tile.type > TileID.Count) {
@@ -4288,7 +4288,7 @@
  		}
  
 @@ -37347,7 +_,7 @@
- 			if (Main.tile[x, y - 1] == null)
+ 			if (false)
  				return false;
  
 -			if (!Main.tile[x, y - 1].active() || Main.tile[x, y - 1].type != 79)

@@ -28,7 +28,7 @@
 @@ -100,9 +_,8 @@
  			public DoorCloseAttemptResult TryCloseDoor(DoorOpenCloseTogglingInfo info, PlayerInfoForClosingDoors playerInfo) {
  				Point tileCoordsForToggling = info.tileCoordsForToggling;
- 				Tile tile = Main.tile[tileCoordsForToggling.X, tileCoordsForToggling.Y];
+ 				ref Tile tile = ref Main.tile[tileCoordsForToggling.X, tileCoordsForToggling.Y];
 -				if (!tile.active() || tile.type != 11)
 -					return DoorCloseAttemptResult.DoorIsInvalidated;
 -
@@ -47,8 +47,8 @@
  		private int _timeWeCanOpenDoorsUsingVelocityAlone;
  
 @@ -315,11 +_,12 @@
- 			Tile tile = Main.tile[tileCoords.X, tileCoords.Y];
- 			if (tile == null)
+ 			ref Tile tile = ref Main.tile[tileCoords.X, tileCoords.Y];
+ 			if (false)
  				return false;
 -
 -			if (!_handlerByTileType.TryGetValue(tile.type, out infoProvider))

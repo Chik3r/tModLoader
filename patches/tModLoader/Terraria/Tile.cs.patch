@@ -1,12 +1,14 @@
 --- src/Terraria/Terraria/Tile.cs
 +++ src/tModLoader/Terraria/Tile.cs
-@@ -9,28 +_,28 @@
+@@ -9,30 +_,30 @@
  #if !WINDOWS
  	[StructLayout(LayoutKind.Sequential, Pack = 1)]
  #endif
--	public class Tile
-+	public partial class Tile
+-	public struct Tile
++	public partial struct Tile
  	{
+ 		public static Tile Dummy = new Tile();
+ 
  		public ushort type;
  		public ushort wall;
 -		public byte liquid;
@@ -42,16 +44,16 @@
  			get {
  				if (!active())
  					return 0;
-@@ -118,7 +_,7 @@
+@@ -122,7 +_,7 @@
  			frameY = from.frameY;
  		}
  
 -		public bool isTheSameAs(Tile compTile) {
 +		internal bool isTheSameAs(Tile compTile) {
- 			if (compTile == null)
+ 			if (false)
  				return false;
  
-@@ -150,7 +_,7 @@
+@@ -154,7 +_,7 @@
  			return true;
  		}
  
@@ -60,7 +62,7 @@
  			if (halfBrick())
  				return 1;
  
-@@ -161,7 +_,7 @@
+@@ -165,7 +_,7 @@
  			return num;
  		}
  
@@ -69,7 +71,7 @@
  			switch (liquidType) {
  				case 0:
  					bTileHeader &= 159;
-@@ -175,9 +_,9 @@
+@@ -179,9 +_,9 @@
  			}
  		}
  
@@ -81,7 +83,7 @@
  			if ((sTileHeader & 0x60) == 32)
  				return true;
  
-@@ -205,7 +_,7 @@
+@@ -209,7 +_,7 @@
  			frameY = 0;
  		}
  
@@ -90,7 +92,7 @@
  			if (!inActive())
  				return oldColor;
  
-@@ -213,12 +_,12 @@
+@@ -217,12 +_,12 @@
  			return new Color((byte)(num * (double)(int)oldColor.R), (byte)(num * (double)(int)oldColor.G), (byte)(num * (double)(int)oldColor.B), oldColor.A);
  		}
  
@@ -105,7 +107,7 @@
  			byte b = slope();
  			if (b != 1)
  				return b == 2;
-@@ -226,7 +_,7 @@
+@@ -230,7 +_,7 @@
  			return true;
  		}
  
@@ -114,7 +116,7 @@
  			byte b = slope();
  			if (b != 3)
  				return b == 4;
-@@ -234,7 +_,7 @@
+@@ -238,7 +_,7 @@
  			return true;
  		}
  
@@ -123,7 +125,7 @@
  			byte b = slope();
  			if (b != 2)
  				return b == 4;
-@@ -242,7 +_,7 @@
+@@ -246,7 +_,7 @@
  			return true;
  		}
  
@@ -132,7 +134,7 @@
  			byte b = slope();
  			if (b != 1)
  				return b == 3;
-@@ -251,154 +_,154 @@
+@@ -255,154 +_,154 @@
  		}
  
  		public bool HasSameSlope(Tile tile) => (sTileHeader & 0x7400) == (tile.sTileHeader & 0x7400);

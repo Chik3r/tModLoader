@@ -17,7 +17,7 @@
  
 -		public static bool IsLocked(Tile t) {
 +		public static bool IsLocked(int x, int y, Tile t) {
- 			if (t == null)
+ 			if (false)
  				return true;
 +				
 +			if (t.type >= TileID.Count)
@@ -26,7 +26,7 @@
  			if (t.type == 21 && ((t.frameX >= 72 && t.frameX <= 106) || (t.frameX >= 144 && t.frameX <= 178) || (t.frameX >= 828 && t.frameX <= 1006) || (t.frameX >= 1296 && t.frameX <= 1330) || (t.frameX >= 1368 && t.frameX <= 1402) || (t.frameX >= 1440 && t.frameX <= 1474)))
  				return true;
 @@ -272,6 +_,17 @@
- 			Tile tileSafely = Framing.GetTileSafely(X, Y);
+ 			ref Tile tileSafely = ref Framing.GetTileSafely(X, Y);
  			int type2 = tileSafely.type;
  			int num2 = tileSafely.frameX / 36;
 +			if (Main.tile[X, Y].type >= TileID.Count) {
