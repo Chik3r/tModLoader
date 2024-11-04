@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Terraria.Localization;
+using Terraria.ModLoader.Engine;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.UI;
 
@@ -66,6 +67,7 @@ internal class ModCompile
 
 	// Silence exception reporting in the chat unless actively modding.
 	public static bool activelyModding;
+	internal static DateTime recentlyBuiltModCheckTimeCutoff = DateTime.Now - TimeSpan.FromSeconds(60);
 
 	public static bool DeveloperMode => Debugger.IsAttached || Directory.Exists(ModSourcePath) && FindModSources().Length > 0;
 
@@ -130,13 +132,13 @@ $@"<Project ToolsVersion=""14.0"" xmlns=""http://schemas.microsoft.com/developer
 			new ModCompile(new ConsoleBuildStatus()).Build(modFolder);
 		}
 		catch (BuildException e) {
-			Console.Error.WriteLine("Error: " + e.Message);
+			ErrorReporting.LogStandardDiagnosticError(e.Message, e.errorCode);
 			if (e.InnerException != null)
 				Console.Error.WriteLine(e.InnerException);
 			Environment.Exit(1);
 		}
 		catch (Exception e) {
-			Console.Error.WriteLine(e);
+			ErrorReporting.LogStandardDiagnosticError(e.Message, ErrorReporting.TMLErrorCode.TML001);
 			Environment.Exit(1);
 		}
 

@@ -91,6 +91,10 @@ internal class UIBuildMod : UIProgress, ModCompile.IBuildStatus
 			else
 				msg += $"\n\n{e}";
 
+			if (e.Data.Contains("showTModPorterHint")) {
+				msg += $"\n{"Some of these errors can be fixed automatically by running tModPorter from the Mod Sources menu."}";
+			}
+
 			Interface.errorMessage.Show(msg, Interface.modSourcesID, webHelpURL: e.HelpLink, retryAction: retry);
 			return Task.FromResult(false);
 		}

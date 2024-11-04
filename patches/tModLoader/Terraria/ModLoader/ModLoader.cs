@@ -62,9 +62,9 @@ public static class ModLoader
 	internal static bool autoReloadRequiredModsLeavingModsScreen = true;
 	internal static bool removeForcedMinimumZoom;
 	internal static int attackSpeedScalingTooltipVisibility = 1; // Shown, WhenNonZero, Hidden
-	internal static bool showMemoryEstimates = true;
 	internal static bool notifyNewMainMenuThemes = true;
 	internal static bool showNewUpdatedModsInfo = true;
+	internal static bool showConfirmationWindowWhenEnableDisableAllMods = true;
 	internal static bool skipLoad;
 	internal static Action OnSuccessfulLoad;
 
@@ -351,17 +351,16 @@ public static class ModLoader
 	{
 		Main.Configuration.Put("ModBrowserPassphrase", modBrowserPassphrase);
 		Main.Configuration.Put("DownloadModsFromServers", ModNet.downloadModsFromServers);
-		Main.Configuration.Put("OnlyDownloadSignedModsFromServers", ModNet.onlyDownloadSignedMods);
 		Main.Configuration.Put("AutomaticallyReloadAndEnableModsLeavingModBrowser", autoReloadAndEnableModsLeavingModBrowser);
 		Main.Configuration.Put("AutomaticallyReloadRequiredModsLeavingModsScreen", autoReloadRequiredModsLeavingModsScreen);
 		Main.Configuration.Put("RemoveForcedMinimumZoom", removeForcedMinimumZoom);
 		Main.Configuration.Put(nameof(attackSpeedScalingTooltipVisibility).ToUpperInvariant(), attackSpeedScalingTooltipVisibility);
-		Main.Configuration.Put("ShowMemoryEstimates", showMemoryEstimates);
 		Main.Configuration.Put("AvoidGithub", UI.ModBrowser.UIModBrowser.AvoidGithub);
 		Main.Configuration.Put("AvoidImgur", UI.ModBrowser.UIModBrowser.AvoidImgur);
 		Main.Configuration.Put(nameof(UI.ModBrowser.UIModBrowser.EarlyAutoUpdate), UI.ModBrowser.UIModBrowser.EarlyAutoUpdate);
 		Main.Configuration.Put("ShowModMenuNotifications", notifyNewMainMenuThemes);
 		Main.Configuration.Put("ShowNewUpdatedModsInfo", showNewUpdatedModsInfo);
+		Main.Configuration.Put("ShowConfirmationWindowWhenEnableDisableAllMods", showConfirmationWindowWhenEnableDisableAllMods);
 		Main.Configuration.Put("LastSelectedModMenu", MenuLoader.LastSelectedModMenu);
 		Main.Configuration.Put("KnownMenuThemes", MenuLoader.KnownMenuSaveString);
 		Main.Configuration.Put("BossBarStyle", BossBarLoader.lastSelectedStyle);
@@ -379,16 +378,15 @@ public static class ModLoader
 	{
 		Main.Configuration.Get("ModBrowserPassphrase", ref modBrowserPassphrase);
 		Main.Configuration.Get("DownloadModsFromServers", ref ModNet.downloadModsFromServers);
-		Main.Configuration.Get("OnlyDownloadSignedModsFromServers", ref ModNet.onlyDownloadSignedMods);
 		Main.Configuration.Get("AutomaticallyReloadAndEnableModsLeavingModBrowser", ref autoReloadAndEnableModsLeavingModBrowser);
 		Main.Configuration.Get("AutomaticallyReloadRequiredModsLeavingModsScreen", ref autoReloadRequiredModsLeavingModsScreen);
 		Main.Configuration.Get("RemoveForcedMinimumZoom", ref removeForcedMinimumZoom);
 		Main.Configuration.Get(nameof(attackSpeedScalingTooltipVisibility).ToUpperInvariant(), ref attackSpeedScalingTooltipVisibility);
-		Main.Configuration.Get("ShowMemoryEstimates", ref showMemoryEstimates);
 		Main.Configuration.Get("AvoidGithub", ref UI.ModBrowser.UIModBrowser.AvoidGithub);
 		Main.Configuration.Get("AvoidImgur", ref UI.ModBrowser.UIModBrowser.AvoidImgur);
 		Main.Configuration.Get(nameof(UI.ModBrowser.UIModBrowser.EarlyAutoUpdate), ref UI.ModBrowser.UIModBrowser.EarlyAutoUpdate);
 		Main.Configuration.Get("ShowModMenuNotifications", ref notifyNewMainMenuThemes);
+		Main.Configuration.Get("ShowConfirmationWindowWhenEnableDisableAllMods", ref showConfirmationWindowWhenEnableDisableAllMods);
 		Main.Configuration.Get("ShowNewUpdatedModsInfo", ref showNewUpdatedModsInfo);
 		Main.Configuration.Get("LastSelectedModMenu", ref MenuLoader.LastSelectedModMenu);
 		Main.Configuration.Get("KnownMenuThemes", ref MenuLoader.KnownMenuSaveString);
@@ -405,9 +403,6 @@ public static class ModLoader
 
 	internal static void MigrateSettings()
 	{
-		if (LastLaunchedTModLoaderVersion < new Version(0, 11, 7, 5))
-			showMemoryEstimates = true;
-
 		// TODO: Stable RecentGitHubCommits.txt is probably not accurate for showing stable users, we could use a summary for the month of changes rather than recent commits.
 		if (BuildInfo.IsPreview && LastLaunchedTModLoaderVersion != BuildInfo.tMLVersion) {
 			ShowWhatsNew = true;
